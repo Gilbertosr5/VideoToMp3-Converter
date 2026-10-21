@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>AudioLocal — Conversor MP3</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="AudioLocal, página inicial">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="9" fill="currentColor"/>
+          <g fill="#fff">
+            <rect x="6" y="13" width="3" height="6" rx="1.5"/>
+            <rect x="11" y="9" width="3" height="14" rx="1.5"/>
+            <rect x="16" y="6" width="3" height="20" rx="1.5"/>
+            <rect x="21" y="10" width="3" height="12" rx="1.5"/>
+            <rect x="26" y="14" width="3" height="4" rx="1.5"/>
+          </g>
+        </svg>
+        <span>AudioLocal</span>
+      </a>
+      <span class="badge"><span class="badge-dot" aria-hidden="true"></span>Roda somente neste computador</span>
+    </header>
+
+    <main>
+      <section class="panel converter" aria-labelledby="converter-title">
+        <h1 id="converter-title">Transforme vídeos em MP3</h1>
+        <p class="lead">Cole o link, escolha a qualidade e baixe o áudio. Tudo é processado na sua máquina.</p>
+
+        <form id="convert-form" novalidate>
+          <label class="field-label" for="url">Link do vídeo ou arquivo</label>
+          <div class="url-field">
+            <input id="url" name="url" type="url" placeholder="https://..." required autocomplete="url" inputmode="url">
+            <button id="convert-btn" class="button" type="submit">Converter para MP3</button>
+          </div>
+
+          <fieldset class="quality">
+            <legend class="field-label">Qualidade do MP3</legend>
+            <div class="quality-options">
+              <label class="quality-option">
+                <input type="radio" name="bitrate" value="128">
+                <span class="quality-card"><strong>128 kbps</strong><small>Arquivo menor</small></span>
+              </label>
+              <label class="quality-option">
+                <input type="radio" name="bitrate" value="192" checked>
+                <span class="quality-card"><strong>192 kbps</strong><small>Equilibrado</small></span>
+              </label>
+              <label class="quality-option">
+                <input type="radio" name="bitrate" value="320">
+                <span class="quality-card"><strong>320 kbps</strong><small>Maior qualidade</small></span>
+              </label>
+            </div>
+          </fieldset>
+          <p class="hint">A conversão pode levar alguns minutos, dependendo do tamanho do vídeo e da sua conexão.</p>
+        </form>
+
+        <div id="notice" class="notice" role="status" hidden></div>
+
+        <div id="progress-card" class="progress-card" aria-live="polite" hidden>
+          <div class="progress-heading">
+            <strong id="task-title">Preparando…</strong>
+            <span id="progress-percent">0%</span>
+          </div>
+          <div id="progress-track" class="waveform" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="task-title">
+            <div id="progress-bar" class="waveform-fill"></div>
+          </div>
+          <p id="progress-message" class="progress-message">Na fila…</p>
+          <a id="download-link" class="button button--success" href="#" hidden>Baixar MP3</a>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="history-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="history-title">Histórico</h2>
+            <p class="muted">Até 100 conversões recentes neste computador.</p>
+          </div>
+          <button id="refresh-btn" class="button button--ghost" type="button">Atualizar</button>
+        </div>
+        <div id="history-list" class="history-list"><p class="muted">Carregando histórico…</p></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Use apenas conteúdos próprios, autorizados ou cujo download seja permitido. Respeite os direitos autorais e os termos da plataforma.</p>
+      <p>O servidor escuta somente em <code>127.0.0.1</code>. Não compartilhe esta aplicação publicamente.</p>
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
